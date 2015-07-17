@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		53EF70271A9A38B9000FBFE2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53EF70261A9A38B9000FBFE2 /* Images.xcassets */; };
-		5AB0DA258592480FB4099411 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 746D153768E9481F8194ECCE /* libPods.a */; };
 		69855A85F6C241808F6F609F /* libPods-FSImageViewerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4F4DB52EA04D489651AD23 /* libPods-FSImageViewerTests.a */; };
-		FD0FEFBB17D77F1C00470082 /* FSBasicImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0FEFBA17D77F1C00470082 /* FSBasicImageSource.m */; };
 		FD0FEFBF17D781EF00470082 /* FSBasicImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0FEFBE17D781EF00470082 /* FSBasicImage.m */; };
 		FD37CEC0181EBA5700606D81 /* FSImageViewer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD37CEBF181EBA5700606D81 /* FSImageViewer.bundle */; };
 		FD89E29417CB99D900A41D91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD89E29317CB99D900A41D91 /* Foundation.framework */; };
@@ -20,7 +18,6 @@
 		FD89E2B017CB99F000A41D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD89E2AE17CB99F000A41D91 /* InfoPlist.strings */; };
 		FD89E2B217CB99F000A41D91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD89E2B117CB99F000A41D91 /* main.m */; };
 		FD89E2B617CB99F000A41D91 /* FSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD89E2B517CB99F000A41D91 /* FSAppDelegate.m */; };
-		FD89E2CA17CB9A0700A41D91 /* FSImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD89E2C217CB9A0700A41D91 /* FSImageLoader.m */; };
 		FD89E2CB17CB9A0700A41D91 /* FSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD89E2C417CB9A0700A41D91 /* FSImageScrollView.m */; };
 		FD89E2CC17CB9A0700A41D91 /* FSImageTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD89E2C717CB9A0700A41D91 /* FSImageTitleView.m */; };
 		FD89E2CD17CB9A0700A41D91 /* FSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD89E2C917CB9A0700A41D91 /* FSImageView.m */; };
@@ -79,8 +76,6 @@
 		85A9CBC49B63FEB31F1448F5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		EAB987CD32B1D53A7F4A3B72 /* Pods-FSImageViewerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FSImageViewerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FSImageViewerTests/Pods-FSImageViewerTests.release.xcconfig"; sourceTree = "<group>"; };
 		F438121ACBFC9888194F99FE /* Pods-FSImageViewerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FSImageViewerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FSImageViewerTests/Pods-FSImageViewerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FD0FEFB917D77F1C00470082 /* FSBasicImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSBasicImageSource.h; sourceTree = "<group>"; };
-		FD0FEFBA17D77F1C00470082 /* FSBasicImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSBasicImageSource.m; sourceTree = "<group>"; };
 		FD0FEFBD17D781EF00470082 /* FSBasicImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSBasicImage.h; sourceTree = "<group>"; };
 		FD0FEFBE17D781EF00470082 /* FSBasicImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSBasicImage.m; sourceTree = "<group>"; };
 		FD37CEBF181EBA5700606D81 /* FSImageViewer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FSImageViewer.bundle; sourceTree = SOURCE_ROOT; };
@@ -103,8 +98,6 @@
 		FD89E2B417CB99F000A41D91 /* FSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSAppDelegate.h; sourceTree = "<group>"; };
 		FD89E2B517CB99F000A41D91 /* FSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSAppDelegate.m; sourceTree = "<group>"; };
 		FD89E2C017CB9A0700A41D91 /* FSImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSImage.h; sourceTree = "<group>"; };
-		FD89E2C117CB9A0700A41D91 /* FSImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSImageLoader.h; sourceTree = "<group>"; };
-		FD89E2C217CB9A0700A41D91 /* FSImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSImageLoader.m; sourceTree = "<group>"; };
 		FD89E2C317CB9A0700A41D91 /* FSImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSImageScrollView.h; sourceTree = "<group>"; };
 		FD89E2C417CB9A0700A41D91 /* FSImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSImageScrollView.m; sourceTree = "<group>"; };
 		FD89E2C517CB9A0700A41D91 /* FSImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSImageSource.h; sourceTree = "<group>"; };
@@ -138,7 +131,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD89E29417CB99D900A41D91 /* Foundation.framework in Frameworks */,
-				5AB0DA258592480FB4099411 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,11 +217,7 @@
 			children = (
 				FD0FEFBD17D781EF00470082 /* FSBasicImage.h */,
 				FD0FEFBE17D781EF00470082 /* FSBasicImage.m */,
-				FD0FEFB917D77F1C00470082 /* FSBasicImageSource.h */,
-				FD0FEFBA17D77F1C00470082 /* FSBasicImageSource.m */,
 				FD89E2C017CB9A0700A41D91 /* FSImage.h */,
-				FD89E2C117CB9A0700A41D91 /* FSImageLoader.h */,
-				FD89E2C217CB9A0700A41D91 /* FSImageLoader.m */,
 				FD89E2C317CB9A0700A41D91 /* FSImageScrollView.h */,
 				FD89E2C417CB9A0700A41D91 /* FSImageScrollView.m */,
 				FD89E2C517CB9A0700A41D91 /* FSImageSource.h */,
@@ -309,11 +297,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD89E29E17CB99D900A41D91 /* Build configuration list for PBXNativeTarget "FSImageViewer" */;
 			buildPhases = (
-				668C822E290F479BBF42B716 /* Check Pods Manifest.lock */,
 				FD89E28C17CB99D900A41D91 /* Sources */,
 				FD89E28D17CB99D900A41D91 /* Frameworks */,
 				FD89E28E17CB99D900A41D91 /* CopyFiles */,
-				F7A857B1B6AA493B8B48C1BD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -424,21 +410,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		668C822E290F479BBF42B716 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		E172C5EA369C4663AD247B30 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -469,21 +440,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FSImageViewerTests/Pods-FSImageViewerTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F7A857B1B6AA493B8B48C1BD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -491,13 +447,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD89E2CA17CB9A0700A41D91 /* FSImageLoader.m in Sources */,
 				FD89E2CB17CB9A0700A41D91 /* FSImageScrollView.m in Sources */,
 				FD89E2CC17CB9A0700A41D91 /* FSImageTitleView.m in Sources */,
 				FD89E2CD17CB9A0700A41D91 /* FSImageView.m in Sources */,
 				FD89E2D217CB9A0E00A41D91 /* FSImageViewerViewController.m in Sources */,
 				FD89E2D317CB9A0E00A41D91 /* FSPlaceholderImages.m in Sources */,
-				FD0FEFBB17D77F1C00470082 /* FSBasicImageSource.m in Sources */,
 				FD0FEFBF17D781EF00470082 /* FSBasicImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

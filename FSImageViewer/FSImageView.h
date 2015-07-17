@@ -25,7 +25,6 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "FSImageSource.h"
-#import "FSImageLoader.h"
 
 @class FSImageScrollView, FSImageTitleView;
 
@@ -36,6 +35,7 @@
 @property(strong, nonatomic, readonly) FSImageScrollView *scrollView;
 @property(assign, nonatomic) BOOL loading;
 @property(assign, nonatomic) BOOL rotationEnabled;
+@property (nonatomic, weak) id <FSImageSource> imageSource;
 
 - (void)killScrollViewZoom;
 

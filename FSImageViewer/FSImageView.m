@@ -21,7 +21,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-#import <UAProgressView/UAProgressView.h>
 #import "FSImageView.h"
 #import "FSPlaceholderImages.h"
 #import "FSImageScrollView.h"
@@ -45,7 +44,7 @@
 
 @interface FSImageView()
 
-@property (nonatomic, strong) UAProgressView *progressView;
+//@property (nonatomic, strong) UAProgressView *progressView;
 
 @end
 
@@ -76,10 +75,10 @@
         [_scrollView addSubview:imageView];
         _imageView = imageView;
         
-        self.progressView = [[UAProgressView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) / 2) - 22.0f, CGRectGetHeight(self.frame) / 2 - 22.0f, 44.0f, 44.0f)];
-
-        _progressView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-        [self addSubview:_progressView];
+//        self.progressView = [[UAProgressView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) / 2) - 22.0f, CGRectGetHeight(self.frame) / 2 - 22.0f, 44.0f, 44.0f)];
+//
+//        _progressView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+//        [self addSubview:_progressView];
 
         RotateGesture *gesture = [[RotateGesture alloc] initWithTarget:self action:@selector(rotate:)];
         [self addGestureRecognizer:gesture];
@@ -90,7 +89,7 @@
 
 - (void)dealloc {
     if (_image) {
-        [[FSImageLoader sharedInstance] cancelRequestForUrl:self.image.URL];
+        [self.imageSource cancelRequestForImage: self.image];
     }
 }
 
@@ -113,7 +112,7 @@
         return;
     }
     if (_image != nil) {
-        [[FSImageLoader sharedInstance] cancelRequestForUrl:_image.URL];
+        [self.imageSource cancelRequestForImage: _image];
     }
 
     _image = aImage;
@@ -131,8 +130,8 @@
             NSInteger fileSize = [[attributes objectForKey:NSFileSize] integerValue];
 
             if (fileSize >= MB_FILE_SIZE) {
-                _progressView.hidden = NO;
-                [_progressView setProgress:0.5 animated:YES];
+//                _progressView.hidden = NO;
+//                [_progressView setProgress:0.5 animated:YES];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 
                     UIImage *image = nil;
@@ -144,7 +143,7 @@
                     }
 
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        _progressView.hidden = YES;
+//                        _progressView.hidden = YES;
                         if (image != nil) {
                             [self setupImageViewWithImage:image];
                         }
@@ -159,26 +158,32 @@
 
         }
         else {
-            _progressView.hidden = NO;
+//            _progressView.hidden = NO;
             __weak FSImageView *weakSelf = self;
-            [[FSImageLoader sharedInstance] loadImageForURL:_image.URL progress:^(float progress) {
-                [weakSelf.progressView setProgress:progress animated:YES];
-            }image:^(UIImage *image, NSError *error) {
-                __strong FSImageView *strongSelf = weakSelf;
-                if (!error) {
-                    strongSelf.image.image = image;
-                    [strongSelf setupImageViewWithImage:image];
-                }
-                else {
-                    [strongSelf handleFailedImage];
-                }
-            }];
+            [self.imageSource loadImage: _image
+                               progress: ^(float progress)
+                               {
+//                                   [weakSelf.progressView setProgress: progress animated: YES];
+                               }
+                                  image: ^(UIImage* image, NSError* error)
+                                  {
+                                      __strong FSImageView* strongSelf = weakSelf;
+                                      if (!error)
+                                      {
+                                          strongSelf.image.image = image;
+                                          [strongSelf setupImageViewWithImage: image];
+                                      }
+                                      else
+                                      {
+                                          [strongSelf handleFailedImage];
+                                      }
+                                  }];
         }
 
     }
 
     if (_imageView.image) {
-        _progressView.hidden = YES;
+//        _progressView.hidden = YES;
         self.userInteractionEnabled = YES;
         _loading = NO;
 
@@ -200,7 +205,7 @@
     }
 
     _loading = NO;
-    _progressView.hidden = YES;
+//    _progressView.hidden = YES;
     _imageView.image = aImage;
     [self layoutScrollViewAnimated:NO];
 
@@ -224,9 +229,8 @@
 }
 
 - (void)changeProgressViewColor:(UIColor *)color {
-    _progressView.tintColor = color;
+//    _progressView.tintColor = color;
 }
-
 
 - (void)handleFailedImage {
 
@@ -234,7 +238,7 @@
     _image.failed = YES;
     [self layoutScrollViewAnimated:NO];
     self.userInteractionEnabled = NO;
-    _progressView.hidden = YES;
+//    _progressView.hidden = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:kFSImageViewerDidFinishedLoadingNotificationKey object:@{
             @"image" : self.image,
             @"failed" : @(YES)

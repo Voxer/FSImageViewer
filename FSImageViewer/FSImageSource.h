@@ -39,6 +39,20 @@
 /// @warning index must be in the range of the images
 - (id <FSImage>)objectAtIndexedSubscript:(NSUInteger)index;
 
+/// Download remote images from url
+/// @param url remote image url
+/// @param imageBlock block for image or error
+- (void) loadImage: (id <FSImage>) image
+          progress: (void (^)(float progress)) progress
+             image: (void (^)(UIImage* result, NSError* error)) imageBlock;
+
+/// Cancel all image requests
+- (void)cancelAllRequests;
+
+/// Cancel image request
+/// @param url remote image url
+- (void) cancelRequestForImage: (id <FSImage>) image;
+
 @end
 
 
