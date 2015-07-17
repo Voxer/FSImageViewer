@@ -42,5 +42,5 @@
 #endif
 
 #ifndef kFSImageViewerZoomScale
-	#define kFSImageViewerZoomScale 2.5
+	#define kFSImageViewerZoomScale 2.5f
 #endif

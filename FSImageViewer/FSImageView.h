@@ -37,7 +37,8 @@
 @property(assign, nonatomic) BOOL rotationEnabled;
 @property (nonatomic, weak) id <FSImageSource> imageSource;
 
-- (void)killScrollViewZoom;
+- (void) killScrollViewZoom;
+- (void) killScrollViewZoom: (void (^)(BOOL finished)) completion;
 
 - (void)layoutScrollViewAnimated:(BOOL)animated;
 

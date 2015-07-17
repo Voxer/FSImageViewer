@@ -26,10 +26,15 @@
 
 @implementation FSImageScrollView
 
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+- (id) initWithFrame: (CGRect) frame
+{
+    self = [super initWithFrame: frame];
+    if (self)
+    {
+        self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin   |
+                                UIViewAutoresizingFlexibleRightMargin  |
+                                UIViewAutoresizingFlexibleBottomMargin |
+                                UIViewAutoresizingFlexibleTopMargin;
         self.scrollEnabled = NO;
 		self.pagingEnabled = NO;
 		self.clipsToBounds = NO;
@@ -48,17 +53,18 @@
     return self;
 }
 
-- (void)zoomRectWithCenter:(CGPoint)center{
-	
-    if (self.zoomScale > 1.0f) {
+- (void) zoomRectWithCenter: (CGPoint) center
+{
+    if (self.zoomScale > 1.0f)
+    {
         self.scrollEnabled = NO;
-        [((FSImageView *)self.superview) killScrollViewZoom];
+        [((FSImageView*) self.superview) killScrollViewZoom];
         return;
     }
     self.scrollEnabled = YES;
 	CGRect rect;
 	rect.size = CGSizeMake(self.frame.size.width / kFSImageViewerZoomScale, self.frame.size.height / kFSImageViewerZoomScale);
-	rect.origin.x = MAX((center.x - (rect.size.width / 2.0f)), 0.0f);		
+	rect.origin.x = MAX((center.x - (rect.size.width  / 2.0f)), 0.0f);
 	rect.origin.y = MAX((center.y - (rect.size.height / 2.0f)), 0.0f);
 	
 	CGRect frame = [self.superview convertRect:self.frame toView:self.superview];
@@ -95,15 +101,19 @@
 	[super touchesBegan:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void) touchesEnded: (NSSet*) touches withEvent: (UIEvent*) event
+{
 	[super touchesEnded:touches withEvent:event];
-	UITouch *touch = [touches anyObject];
-	
-	if (touch.tapCount == 1) {
-		[self performSelector:@selector(toggleBars) withObject:nil afterDelay:.2];
-	} else if (touch.tapCount == 2) {
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(toggleBars) object:nil];
-		[self zoomRectWithCenter:[[touches anyObject] locationInView:self]];
+
+    UITouch* touch = [touches anyObject];
+	if (touch.tapCount == 1)
+	{
+        [self performSelector: @selector(toggleBars) withObject: nil afterDelay: 0.2];
+	}
+	else if (touch.tapCount == 2)
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget: self selector: @selector(toggleBars) object: nil];
+        [self zoomRectWithCenter: [[touches anyObject] locationInView: self]];
 	}
 }
 

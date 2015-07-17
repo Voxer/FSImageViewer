@@ -26,6 +26,7 @@
 #import "FSImageSource.h"
 #import "FSTitleView.h"
 
+@class FSImageView;
 @class FSImageViewerViewController;
 
 // Optional Delegate for getting current presented image index.
@@ -34,7 +35,8 @@
 @optional
 
 // Called if moved to the image at the given index.
-- (void)imageViewerViewController:(FSImageViewerViewController *)imageViewerViewController didMoveToImageAtIndex:(NSInteger)index;
+- (void) imageViewerViewController: (FSImageViewerViewController*) imageViewerViewController didMoveToImageAtIndex: (NSInteger) index;
+- (void) imageViewerViewController: (FSImageViewerViewController*) imageViewerViewController willToggleChromeVisibility: (BOOL) chromeVisible;
 
 - (void)imageViewerViewController:(FSImageViewerViewController *)imageViewerViewController willDismissViewControllerAnimated:(BOOL)animated;
 - (void)imageViewerViewController:(FSImageViewerViewController *)imageViewerViewController didDismissViewControllerAnimated:(BOOL)animated;
@@ -94,9 +96,11 @@
 /// @return current index of the image displayed
 - (NSInteger)currentImageIndex;
 
+- (FSImageView*) currentImageView;
+
 /// Move the FSImageView to the index
 /// @param index index move to
-/// @param animated should the movevement animated
+/// @param animated should the movement animated
 - (void)moveToImageAtIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end

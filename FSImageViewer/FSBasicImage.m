@@ -26,7 +26,6 @@
 
 @implementation FSBasicImage
 
-@synthesize URL = _URL;
 @synthesize title = _title;
 @synthesize size = _size;
 @synthesize image = _image;
@@ -35,7 +34,6 @@
 - (id)initWithImageURL:(NSURL *)aURL name:(NSString *)aName image:(UIImage *)aImage {
     self = [super init];
     if (self) {
-        _URL = aURL;
         _title = aName;
         self.image = aImage;
         

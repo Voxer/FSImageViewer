@@ -224,6 +224,11 @@
     return pageIndex;
 }
 
+- (FSImageView*) currentImageView
+{
+    return self.imageViews[(NSUInteger) self.currentImageIndex];
+}
+
 #pragma mark - Bar/Caption Methods
 
 - (void)setStatusBarHidden:(BOOL)hidden {
@@ -234,7 +239,6 @@
     } else {
         [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:UIStatusBarAnimationFade];
     }
-
 }
 
 - (void)setBarsHidden:(BOOL)hidden animated:(BOOL)animated {
@@ -242,8 +246,13 @@
         return;
     }
 
-    [self setStatusBarHidden:hidden];
-    [self.navigationController setNavigationBarHidden:hidden animated:animated];
+    if ([self.delegate respondsToSelector: @selector(imageViewerViewController:willToggleChromeVisibility:)])
+        [self.delegate imageViewerViewController: self willToggleChromeVisibility: !hidden];
+    else
+    {
+        [self setStatusBarHidden: hidden];
+        [self.navigationController setNavigationBarHidden: hidden animated: animated];
+    }
 
     [UIView animateWithDuration:0.3 animations:^{
         UIColor *backgroundColor = hidden ? _backgroundColorHidden : _backgroundColorVisible;
@@ -459,6 +468,7 @@
 
     if (imageView == nil || (NSNull *) imageView == [NSNull null]) {
         imageView = [[FSImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _scrollView.bounds.size.width, _scrollView.bounds.size.height)];
+        imageView.imageSource     = self.imageSource;
         imageView.rotationEnabled = _rotationEnabled;
         UIColor *backgroundColor = barsHidden ? _backgroundColorHidden : _backgroundColorVisible;
         [imageView changeBackgroundColor:backgroundColor];

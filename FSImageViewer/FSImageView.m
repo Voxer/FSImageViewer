@@ -121,65 +121,24 @@
         _imageView.image = _image.image;
 
     }
-    else {
-
-        if ([_image.URL isFileURL]) {
-
-            NSError *error = nil;
-            NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[_image.URL path] error:&error];
-            NSInteger fileSize = [[attributes objectForKey:NSFileSize] integerValue];
-
-            if (fileSize >= MB_FILE_SIZE) {
-//                _progressView.hidden = NO;
-//                [_progressView setProgress:0.5 animated:YES];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-                    UIImage *image = nil;
-                    NSData *data = [NSData dataWithContentsOfURL:self.image.URL];
-                    if (!data) {
-                        [self handleFailedImage];
-                    } else {
-                        image = [UIImage imageWithData:data];
-                    }
-
-                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        _progressView.hidden = YES;
-                        if (image != nil) {
-                            [self setupImageViewWithImage:image];
-                        }
-
-                    });
-                });
-
-            }
-            else {
-                self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.image.URL]];
-            }
-
-        }
-        else {
-//            _progressView.hidden = NO;
-            __weak FSImageView *weakSelf = self;
-            [self.imageSource loadImage: _image
-                               progress: ^(float progress)
-                               {
-//                                   [weakSelf.progressView setProgress: progress animated: YES];
-                               }
-                                  image: ^(UIImage* image, NSError* error)
+    else
+    {
+        __weak FSImageView* weakSelf = self;
+        [self.imageSource loadImage: _image
+                           progress: ^(float progress) {/* [weakSelf.progressView setProgress: progress animated: YES];*/ }
+                              image: ^(UIImage* image, NSError* error)
+                              {
+                                  __strong FSImageView* strongSelf = weakSelf;
+                                  if (!error)
                                   {
-                                      __strong FSImageView* strongSelf = weakSelf;
-                                      if (!error)
-                                      {
-                                          strongSelf.image.image = image;
-                                          [strongSelf setupImageViewWithImage: image];
-                                      }
-                                      else
-                                      {
-                                          [strongSelf handleFailedImage];
-                                      }
-                                  }];
-        }
-
+                                      strongSelf.image.image = image;
+                                      [strongSelf setupImageViewWithImage: image];
+                                  }
+                                  else
+                                  {
+                                      [strongSelf handleFailedImage];
+                                  }
+                              }];
     }
 
     if (_imageView.image) {
@@ -305,61 +264,65 @@
 
 #pragma mark - Animation
 
-- (CABasicAnimation *)fadeAnimation {
-
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    animation.fromValue = [NSNumber numberWithFloat:0.0f];
-    animation.toValue = [NSNumber numberWithFloat:1.0f];
-    animation.duration = .3f;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-
+- (CABasicAnimation*) fadeAnimation
+{
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath: @"opacity"];
+    animation.fromValue = @(0.0f);
+    animation.toValue   = @(1.0f);
+    animation.duration  = 0.3;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseOut];
     return animation;
 }
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)killZoomAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-
-    if ([finished boolValue]) {
-
-        [self.scrollView setZoomScale:1.0f animated:NO];
+- (void) killZoomAnimationDidStop: (BOOL) finished
+{
+    if (finished)
+    {
+        [self.scrollView setZoomScale: 1.0f animated: NO];
         self.imageView.frame = self.scrollView.bounds;
-        [self layoutScrollViewAnimated:NO];
-
+        [self layoutScrollViewAnimated: NO];
     }
-
 }
 
-- (void)killScrollViewZoom {
+- (void) killScrollViewZoom
+{
+    [self killScrollViewZoom: nil];
+}
 
-    if (!self.scrollView.zoomScale > 1.0f) return;
-
-    if (!self.imageView.image) {
+- (void) killScrollViewZoom: (void (^)(BOOL finished)) completion
+{
+    if (!self.scrollView.zoomScale > 1.0f)
         return;
-    }
 
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationDidStopSelector:@selector(killZoomAnimationDidStop:finished:context:)];
-    [UIView setAnimationDelegate:self];
+    if (!self.imageView.image)
+        return;
 
 
-    CGFloat hfactor = self.imageView.image.size.width / self.frame.size.width;
-    CGFloat vfactor = self.imageView.image.size.height / self.frame.size.height;
+    [UIView animateWithDuration: 0.3
+                     animations: ^
+                     {
+                         CGFloat hfactor = self.imageView.image.size.width  / self.frame.size.width;
+                         CGFloat vfactor = self.imageView.image.size.height / self.frame.size.height;
 
-    CGFloat factor = MAX(hfactor, vfactor);
+                         CGFloat factor = MAX(hfactor, vfactor);
 
-    CGFloat newWidth = (int) (self.imageView.image.size.width / factor);
-    CGFloat newHeight = (int) (self.imageView.image.size.height / factor);
+                         CGFloat newWidth = (int) (self.imageView.image.size.width / factor);
+                         CGFloat newHeight = (int) (self.imageView.image.size.height / factor);
 
-    CGFloat leftOffset = (int) ((self.frame.size.width - newWidth) / 2);
-    CGFloat topOffset = (int) ((self.frame.size.height - newHeight) / 2);
+                         CGFloat leftOffset = (int) ((self.frame.size.width - newWidth)  / 2.0f);
+                         CGFloat topOffset = (int) ((self.frame.size.height - newHeight) / 2.0f);
 
-    self.scrollView.frame = CGRectMake(leftOffset, topOffset, newWidth, newHeight);
-    self.imageView.frame = self.scrollView.bounds;
-
-    [UIView commitAnimations];
-
+                         self.scrollView.frame = CGRectMake(leftOffset, topOffset, newWidth, newHeight);
+                         self.imageView.frame  = self.scrollView.bounds;
+                     }
+                     completion: ^(BOOL finished)
+                     {
+                         [self killZoomAnimationDidStop: finished];
+                         if (completion)
+                             completion(finished);
+                     }];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -447,12 +410,16 @@
     }
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-
-    if (flag) {
-        if ([[anim valueForKey:@"AnimationType"] integerValue] == 101) {
+- (void) animationDidStop: (CAAnimation*) anim finished: (BOOL) flag
+{
+    if (flag)
+    {
+        if ([[anim valueForKey: @"AnimationType"] integerValue] == 101)
+        {
             [self resetBackgroundColors];
-        } else if ([[anim valueForKey:@"AnimationType"] integerValue] == 202) {
+        }
+        else if ([[anim valueForKey: @"AnimationType"] integerValue] == 202)
+        {
             self.layer.transform = CATransform3DIdentity;
         }
     }
