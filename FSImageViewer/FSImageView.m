@@ -56,7 +56,6 @@
     if ((self = [super initWithFrame:frame])) {
 
         self.backgroundColor = [UIColor whiteColor];
-        self.userInteractionEnabled = NO;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.opaque = YES;
         self.rotationEnabled = YES;
@@ -80,9 +79,8 @@
 //        _progressView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
 //        [self addSubview:_progressView];
 
-        RotateGesture *gesture = [[RotateGesture alloc] initWithTarget:self action:@selector(rotate:)];
-        [self addGestureRecognizer:gesture];
-
+//        RotateGesture *gesture = [[RotateGesture alloc] initWithTarget:self action:@selector(rotate:)];
+//        [self addGestureRecognizer:gesture];
     }
     return self;
 }
@@ -92,7 +90,6 @@
         [self.imageSource cancelRequestForImage: self.image];
     }
 }
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -119,10 +116,11 @@
 
     if (_image.image) {
         _imageView.image = _image.image;
-
     }
     else
     {
+        _imageView.image = [UIImage imageNamed: @"image_placeholder_white"];
+
         __weak FSImageView* weakSelf = self;
         [self.imageSource loadImage: _image
                            progress: ^(float progress) {/* [weakSelf.progressView setProgress: progress animated: YES];*/ }
@@ -141,19 +139,20 @@
                               }];
     }
 
-    if (_imageView.image) {
+    if (_image.image)
+    {
 //        _progressView.hidden = YES;
-        self.userInteractionEnabled = YES;
         _loading = NO;
 
         [[NSNotificationCenter defaultCenter] postNotificationName:kFSImageViewerDidFinishedLoadingNotificationKey object:@{
                 @"image" : self.image,
-                @"failed" : @(NO)
+                @"failed" : @NO
         }];
 
-    } else {
+    } else
+    {
         _loading = YES;
-        self.userInteractionEnabled = NO;
+        self.scrollView.maximumZoomScale = self.scrollView.minimumZoomScale = 1.0f;
     }
     [self layoutScrollViewAnimated:NO];
 }
@@ -168,22 +167,22 @@
     _imageView.image = aImage;
     [self layoutScrollViewAnimated:NO];
 
-    [[self layer] addAnimation:[self fadeAnimation] forKey:@"opacity"];
-    self.userInteractionEnabled = YES;
+    [self.layer addAnimation: [self fadeAnimation] forKey: @"opacity"];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:kFSImageViewerDidFinishedLoadingNotificationKey object:@{
-            @"image" : self.image,
-            @"failed" : @(NO)
-    }];
+    [[NSNotificationCenter defaultCenter] postNotificationName: kFSImageViewerDidFinishedLoadingNotificationKey
+                                                        object: @{ @"image"  : self.image,
+                                                                   @"failed" : @NO }];
 }
 
-- (void)prepareForReuse {
+- (void) prepareForReuse
+{
     self.tag = -1;
 }
 
-- (void)changeBackgroundColor:(UIColor *)color {
-    self.backgroundColor = color;
-    self.imageView.backgroundColor = color;
+- (void) changeBackgroundColor: (UIColor*) color
+{
+    self.backgroundColor            = color;
+    self.imageView.backgroundColor  = color;
     self.scrollView.backgroundColor = color;
 }
 
@@ -191,17 +190,15 @@
 //    _progressView.tintColor = color;
 }
 
-- (void)handleFailedImage {
-
+- (void) handleFailedImage
+{
     _imageView.image = FSImageViewerErrorPlaceholderImage;
     _image.failed = YES;
     [self layoutScrollViewAnimated:NO];
-    self.userInteractionEnabled = NO;
 //    _progressView.hidden = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kFSImageViewerDidFinishedLoadingNotificationKey object:@{
-            @"image" : self.image,
-            @"failed" : @(YES)
-    }];
+    [NSNotificationCenter.defaultCenter postNotificationName: kFSImageViewerDidFinishedLoadingNotificationKey
+                                                      object: @{ @"image"  : self.image,
+                                                                 @"failed" : @YES }];
 }
 
 - (void)resetBackgroundColors {
