@@ -16,7 +16,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'FSImageViewer/FS*.{h,m}'
-  s.resources    = 'FSImageViewer.bundle'
 
   s.framework	 = 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'Security', 'CFNetwork'
 
