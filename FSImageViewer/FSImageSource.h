@@ -23,6 +23,7 @@
 //
 
 @protocol FSImage;
+@class FLAnimatedImage;
 
 /// FSImageSource is the data source for the images. For normal usage you can use FSBasicImageSource
 @protocol FSImageSource <NSObject>
@@ -43,8 +44,8 @@
 /// @param url remote image url
 /// @param imageBlock block for image or error
 - (void) loadImage: (id <FSImage>) image
-          progress: (void (^)(float progress)) progress
-             image: (void (^)(UIImage* result, NSError* error)) imageBlock;
+          progress: (void (^)(float)) progress
+             image: (void (^)(UIImage* result, FLAnimatedImage* animatedResult, NSError* error)) imageBlock;
 
 /// Cancel all image requests
 - (void)cancelAllRequests;

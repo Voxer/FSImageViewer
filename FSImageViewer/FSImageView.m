@@ -24,6 +24,7 @@
 #import "FSImageView.h"
 #import "FSPlaceholderImages.h"
 #import "FSImageScrollView.h"
+#import "FLAnimatedImageView.h"
 
 #define ZOOM_VIEW_TAG 0x101
 #define MB_FILE_SIZE 1024*1024
@@ -67,7 +68,7 @@
         [self addSubview:scrollView];
         _scrollView = scrollView;
 
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] initWithFrame:self.bounds];
         imageView.opaque = YES;
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.tag = ZOOM_VIEW_TAG;
@@ -124,13 +125,16 @@
         __weak FSImageView* weakSelf = self;
         [self.imageSource loadImage: _image
                            progress: ^(float progress) {/* [weakSelf.progressView setProgress: progress animated: YES];*/ }
-                              image: ^(UIImage* image, NSError* error)
+                              image: ^(UIImage* image, FLAnimatedImage* animatedImage, NSError* error)
                               {
                                   __strong FSImageView* strongSelf = weakSelf;
                                   if (!error)
                                   {
-                                      strongSelf.image.image = image;
-                                      [strongSelf setupImageViewWithImage: image];
+                                      if (image)
+                                          strongSelf.image.image = image;
+                                      else
+                                          strongSelf.image.animatedImage = animatedImage;
+                                      [strongSelf setupImageViewWithImage: image ?: animatedImage];
                                   }
                                   else
                                   {
@@ -157,14 +161,20 @@
     [self layoutScrollViewAnimated:NO];
 }
 
-- (void)setupImageViewWithImage:(UIImage *)aImage {
-    if (!aImage) {
+- (void) setupImageViewWithImage: (id) anImage
+{
+    if (!anImage) {
         return;
     }
 
     _loading = NO;
-//    _progressView.hidden = YES;
-    _imageView.image = aImage;
+    if ([anImage isKindOfClass: UIImage.class])
+    {
+        _imageView.image = anImage;
+    }
+    else
+        _imageView.animatedImage = anImage;
+
     [self layoutScrollViewAnimated:NO];
 
     [self.layer addAnimation: [self fadeAnimation] forKey: @"opacity"];

@@ -27,12 +27,13 @@
 #import "FSImageSource.h"
 
 @class FSImageScrollView, FSImageTitleView;
+@class FLAnimatedImageView;
 
 @interface FSImageView : UIView <UIScrollViewDelegate>
 
 @property(strong, nonatomic) id <FSImage> image;
-@property(strong, nonatomic, readonly) UIImageView *imageView;
-@property(strong, nonatomic, readonly) FSImageScrollView *scrollView;
+@property(strong, nonatomic, readonly) FLAnimatedImageView *imageView;
+@property(strong, nonatomic, readonly) FSImageScrollView   *scrollView;
 @property(assign, nonatomic) BOOL loading;
 @property(assign, nonatomic) BOOL rotationEnabled;
 @property (nonatomic, weak) id <FSImageSource> imageSource;

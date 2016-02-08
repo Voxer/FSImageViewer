@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+@class FLAnimatedImage;
+
 /// FSImage represents an abstract image object with URL, title and the image object.
 @protocol FSImage <NSObject>
 
@@ -31,6 +33,8 @@
 @property(assign, nonatomic) CGSize size;
 /// The UIImage representation - set directly if not from remote.
 @property(strong, nonatomic) UIImage *image;
+/// The UIImage representation - set directly if not from remote.
+@property(strong, nonatomic) FLAnimatedImage *animatedImage;
 /// true if the image download failed.
 @property(assign, nonatomic, getter=didFail) BOOL failed;
 
